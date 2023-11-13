@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
+    <link
+      rel="stylesheet"
+      href="//at.alicdn.com/t/c/font_4275516_trzcqtbfzp8.css"
+    />
+    <link
+      href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.3.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>个人简历</title>
+  </head>
+  <body>
+    <div id="app" class="container-fluid">
+      <div class="self-info info-item">
+        <div class="info-block">
+          <h2>
+            {{selfInfo.name}}
+            <span class="sub-title">{{selfInfo.occupation}}</span>
+          </h2>
+          <ul>
+            <li>
+              <div class="left-info">
+                <i style="color: #888" class="iconfont icon-phone"></i>
+                <span style="color: #0ea5e9">{{selfInfo.phone}}</span>
+              </div>
+              <div class="right-info">
+                <span style="color: #888">学历</span>
+                <span>{{selfInfo.education}}</span>
+              </div>
+            </li>
+            <li>
+              <div class="left-info">
+                <i style="color: #888" class="iconfont icon-xinfeng"></i>
+                <a :href="`mailto:${selfInfo.mail}`" style="color: #0ea5e9"
+                  >{{selfInfo.mail}}</a
+                >
+              </div>
+              <div class="right-info">
+                <span style="color: #888">生日</span>
+                <span>{{selfInfo.Birthday}}</span>
+              </div>
+            </li>
+            <li>
+              <div class="left-info">
+                <i style="color: #888" class="iconfont icon-wangluo"></i>
+                <a :href="selfInfo.blog" style="color: #0ea5e9"
+                  >{{selfInfo.blog}}</a
+                >
+              </div>
+              <div class="right-info">
+                <span style="color: #888">开发经验</span>
+                <span>{{selfInfo.codeAge}}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="avatar-block">
+          <img src="http://resume.yuanjin.tech/img/avatar.png" alt="" />
+        </div>
+      </div>
+      <div class="edu-info info-item">
+        <h2>教育经历</h2>
+        <ul class="year-block">
+          <li v-for="(item,i) in eduInfo" :key="i">
+            <div class="title">
+              <span style="color: #888">{{item.year}}</span>
+              <span>{{item.school}}</span>
+              <span style="color: #888">{{item.experience}}</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="work-info info-item">
+        <h2>工作经历</h2>
+        <ul class="year-block">
+          <li v-for="(item,i) in workInfo" :key="i">
+            <div class="title">
+              <span style="color: #888">{{item.year}}</span>
+              <span>{{item.company}}</span>
+              <span style="color: #888">{{item.job}}</span>
+            </div>
+            <p>{{item.description}}</p>
+          </li>
+        </ul>
+      </div>
+      <div class="skill-info info-item">
+        <h2>专业技能</h2>
+        <div
+          class="skill-grid"
+          :style="{
+          'grid-template-rows': skillInfo.length
+        }"
+        >
+          <div class="outer-circle" v-for="(item,i) in skillInfo" :key="i">
+            <span>{{item.txt}}</span>
+            <div :style="this.percent(item)" class="inner-circle"></div>
+          </div>
+        </div>
+      </div>
+      <div class="code-info info-item">
+        <h2>项目经验</h2>
+        <div class="code-item">
+          <h3>{{codeInfo.title}}</h3>
+          <div class="row-info">访问地址</div>
+          <a :href="codeInfo.url">{{codeInfo.url}}</a>
+          <div class="row-info">github</div>
+          <a :href="codeInfo.github">{{codeInfo.github}}</a>
+          <div class="row-info">项目背景</div>
+          <p>{{codeInfo.projectBackground}}</p>
+          <div class="row-info">项目实现</div>
+          <div class="project-realize">
+            <p v-for="(item,i) in projectRealizationTxt" :key="i">{{item}}</p>
+          </div>
+        </div>
+        <div class="code-item">
+          <h3>{{codeInfo.title}}</h3>
+          <div class="row-info">访问地址</div>
+          <a :href="codeInfo.url">{{codeInfo.url}}</a>
+          <div class="row-info">github</div>
+          <a :href="codeInfo.github">{{codeInfo.github}}</a>
+          <div class="row-info">项目背景</div>
+          <p>{{codeInfo.projectBackground}}</p>
+          <div class="row-info">项目实现</div>
+          <div class="project-realize">
+            <p v-for="(item,i) in projectRealizationTxt" :key="i">{{item}}</p>
+          </div>
+        </div>
+      </div>
+      <div class="self-comment">
+        <h2>个人评价</h2>
+        <p>{{selfComment}}</p>
+      </div>
+    </div>
+  </body>
+  <script type="module">
+    import { createApp } from "https://unpkg.com/vue@3/dist/vue.esm-browser.js";
+
+    createApp({
+      data() {
+        return {
+          selfInfo: {
+            name: "侯东泽",
+            occupation: "前端工程师",
+            phone: "176 8321 5310",
+            education: "本科",
+            mail: "HDZ1768321@163.com",
+            Birthday: "2002-4-11",
+            blog: "http://47.108.233.198",
+            codeAge: "1年",
+          },
+          eduInfo: [
+            {
+              year: "2020 ~ 2024",
+              school: "西华师范大学",
+              experience: "政治学与行政学",
+            },
+            {
+              year: "2020 ~ 2024",
+              school: "西华师范大学",
+              experience: "政治学与行政学",
+            },
+          ],
+          workInfo: [
+            {
+              year: "2013 ~ 2015",
+              company: "国家蓝翔战略研究院",
+              job: "挖掘机质检员",
+              description:
+                "负责对挖掘机的各种零部件进行检测、维修。对生产线的各个环节进行把控，及时发现风险。负责产品质量状态标识工作，严格控制不良品。也会对进口挖掘机的品质进行把控，制定符合公司战略需要的质检标准",
+            },
+            {
+              year: "2016 ~ 2021",
+              company: "新东方牛栏山分部",
+              job: "肉质检验师",
+              description:
+                "负责给新东方厨师训练班的学员提供优质的猪肉，严格控制猪肉质量。同时还要管理生猪，特别是母猪的生产护理，包括母猪产前指导、产后修复，还要负责母猪的产后咨询等。然后.......实在编不下了去了。",
+            },
+          ],
+          skillInfo: [
+            {
+              txt: "html",
+              percent: 75,
+            },
+            {
+              txt: "css",
+              percent: 75,
+            },
+            {
+              txt: "javascript",
+              percent: 75,
+            },
+            {
+              txt: "git",
+              percent: 50,
+            },
+            {
+              txt: "webpack",
+              percent: 50,
+            },
+            {
+              txt: "vue框架",
+              percent: 50,
+            },
+            {
+              txt: "英语四级",
+              percent: 100,
+            },
+          ],
+          codeInfo: {
+            title: "在线时间管理系统",
+            url: "www.todolist.com",
+            github: "github.com/dengxuming/todolist",
+            projectBackground:
+              "本系统在学习 vue 后，凭个人兴趣，开发的用于进行时间管理的系统",
+            projectRealization: `系统包含 任务清单 、 任务分类 、 日志薄 、 废纸篓 等模块，本人参与了所有模块的开发。
+系统分为前后端两个部分。前端部分使用 vue 作为框架，并使用脚手架 vue-cli 搭建。
+其中，使用 vue-router 处理路由，使用 vuex 处理共享数据，使用 element-ui 构建界面。
+后端部分使用 node 搭建轻量级服务器，通过 express 为前端提供REST风格的接口，数据方面利用 mysql 持久化数据，并利用库 sequelize 提供的接口操作数据库。
+项目开发中遇到了 打包体积过大 的问题，经过研究，最终利用 tree shaking 、 dynamic import 、 gzip ，很好的解决了该问题。`,
+          },
+          selfComment:
+            "对用户运营有一定经验，半年内成功扩展300+用户，主持举办了VIP用户交流访谈活动，善于沟通，成功转化60+用户成为忠实用户",
+        };
+      },
+      computed: {
+        projectRealizationTxt() {
+          const reg = /\r?\n/;
+          return this.codeInfo.projectRealization.split(reg);
+        },
+      },
+      methods: {
+        percent(item) {
+          if (item.percent === 25) {
+            return {
+              "border-top-color": "#0ea5e9",
+            };
+          } else if (item.percent === 50) {
+            return {
+              "border-top-color": "#0ea5e9",
+              "border-right-color": "#0ea5e9",
+            };
+          } else if (item.percent === 75) {
+            return {
+              "border-top-color": "#0ea5e9",
+              "border-right-color": "#0ea5e9",
+              "border-bottom-color": "#0ea5e9",
+            };
+          } else {
+            return {
+              border: "6px solid #0ea5e9",
+            };
+          }
+        },
+      },
+    }).mount("#app");
+  </script>
+</html>
